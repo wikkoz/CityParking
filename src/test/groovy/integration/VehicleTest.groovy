@@ -19,7 +19,7 @@ class VehicleTest extends Specification {
     @Shared
     Repository repository
 
-    def setupSpec() {
+    def setup() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(IntegrationTestConfig.class)
         ctx.refresh()
@@ -30,7 +30,7 @@ class VehicleTest extends Specification {
 
     def "should correctly check if car is on parking"() {
         given:
-        def vehicleId = 100L
+        def vehicleId = 200L
         def driverId = 200L
 
         when:
@@ -46,4 +46,5 @@ class VehicleTest extends Specification {
         then:
         onParkingAfterStop
     }
+
 }

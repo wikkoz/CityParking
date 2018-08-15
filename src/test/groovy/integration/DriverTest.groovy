@@ -17,7 +17,7 @@ class DriverTest extends Specification {
     @Shared
     Repository repository
 
-    def setupSpec() {
+    def setup() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(IntegrationTestConfig.class)
         ctx.refresh()

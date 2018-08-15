@@ -23,7 +23,8 @@ class Repository {
                 100L to VehicleEntity(1, 100),
                 200L to VehicleEntity(2, 200),
                 300L to VehicleEntity(3, 300),
-                400L to VehicleEntity(3, 400)
+                400L to VehicleEntity(4, 400),
+                500L to VehicleEntity(5, 500)
         )
         private val parkingMeterEntries: MutableMap<Long, ParkingMeterEntryEntity> = mutableMapOf()
     }
@@ -47,12 +48,14 @@ class Repository {
                     .map { ParkingMeterMapper.map(parkingMeterEntryEntity, it.t1, it.t2) }
 
     fun findVehicle(businessID: Long): Mono<Vehicle> {
-        val entity = vehicles[businessID] ?: return Mono.error( IllegalArgumentException("Cannot find vehicle with business id $businessID"))
+        val entity = vehicles[businessID]
+                ?: return Mono.error(IllegalArgumentException("Cannot find vehicle with business id $businessID"))
         return Mono.just(Vehicle(entity.businessID))
     }
 
     fun findDriver(businessID: Long): Mono<Driver> {
-        val entity = drivers[businessID] ?: return Mono.error(IllegalArgumentException("Cannot find driver with business id $businessID"))
+        val entity = drivers[businessID]
+                ?: return Mono.error(IllegalArgumentException("Cannot find driver with business id $businessID"))
         return Mono.just(Driver(entity.disabled, entity.businessID))
     }
 
