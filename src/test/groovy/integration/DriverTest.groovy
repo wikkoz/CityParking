@@ -3,6 +3,7 @@ package integration
 import database.Repository
 import driver.DriverService
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import reactor.core.publisher.Mono
 import spock.lang.Shared
 import spock.lang.Specification
 import test.config.IntegrationTestConfig
@@ -30,10 +31,10 @@ class DriverTest extends Specification {
         def driverId = 200L
 
         when:
-        def parkingId = driverService.startParkingMeter(vehicleId, driverId)
+        def parkingId = driverService.startParkingMeter(vehicleId, driverId).block()
 
         then:
-        def parkingEntry = repository.findParkingMeterEntry(parkingId)
+        def parkingEntry = repository.findParkingMeterEntry(parkingId).block()
         parkingEntry.vehicle.businessID == vehicleId
         parkingEntry.driver.businessID == driverId
         !parkingEntry.isFinished()
@@ -45,10 +46,10 @@ class DriverTest extends Specification {
         def driverId = 200L
 
         when:
-        def parkingId = driverService.startParkingMeter(vehicleId, driverId)
-        def money = driverService.stopParkingMeter(parkingId)
+        def parkingId = driverService.startParkingMeter(vehicleId, driverId).block()
+        def money = driverService.stopParkingMeter(parkingId).block()
         then:
-        def parkingEntry = repository.findParkingMeterEntry(parkingId)
+        def parkingEntry = repository.findParkingMeterEntry(parkingId).block()
         parkingEntry.vehicle.businessID == vehicleId
         parkingEntry.driver.businessID == driverId
         parkingEntry.isFinished()
@@ -61,8 +62,8 @@ class DriverTest extends Specification {
         def driverId = 200L
 
         when:
-        driverService.startParkingMeter(vehicleId, driverId)
-        driverService.startParkingMeter(vehicleId, driverId)
+        driverService.startParkingMeter(vehicleId, driverId).block()
+        driverService.startParkingMeter(vehicleId, driverId).block()
         then:
         thrown(IllegalStateException)
     }
