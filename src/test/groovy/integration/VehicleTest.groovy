@@ -34,14 +34,14 @@ class VehicleTest extends Specification {
         def driverId = 200L
 
         when:
-        def onParking = vehicleService.onParkingMeter(vehicleId)
+        def onParking = vehicleService.onParking(vehicleId)
 
         then:
         !onParking
 
         when:
         driverService.startParkingMeter(vehicleId, driverId)
-        def onParkingAfterStop = vehicleService.onParkingMeter(vehicleId)
+        def onParkingAfterStop = vehicleService.onParking(vehicleId)
 
         then:
         onParkingAfterStop

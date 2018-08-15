@@ -2,14 +2,15 @@ package owner
 
 import database.Repository
 import domain.money.Money
+import reactor.core.publisher.Mono
 import java.time.LocalDate
 
 class OwnerService(private val repository: Repository) {
-    fun earnedMoney(day: LocalDate): Money {
+    fun earnedMoney(day: LocalDate): Mono<Money> {
         val calculator = createCalculator()
 
-        val entries = repository.findParkingMeterEntries(day)
-        return calculator.calculateEarnedMoney(entries)
+        return repository.findParkingMeterEntries(day).collectList()
+                .map { calculator.calculateEarnedMoney(it) }
     }
 
     private fun createCalculator(): EarnedMoneyCalculator {

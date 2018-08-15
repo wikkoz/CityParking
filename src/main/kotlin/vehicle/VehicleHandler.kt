@@ -6,9 +6,9 @@ import reactor.core.publisher.Mono
 
 class VehicleHandler(private val vehicleService: VehicleService) {
     fun onParkingMeter(request: ServerRequest): Mono<ServerResponse> {
-        val onParkingMeter = Mono.justOrEmpty(request.pathVariable("vehicleId").toLong())
-                .map{vehicleId -> vehicleService.onParkingMeter(vehicleId)}
-
-        return ServerResponse.ok().body(onParkingMeter, Boolean::class.java)
+        return Mono.justOrEmpty(request.pathVariable("vehicleId").toLong())
+                .flatMap { vehicleId -> vehicleService.onParking(vehicleId) }
+                .flatMap { data -> ServerResponse.ok().syncBody(data) }
+                .onErrorResume { data -> ServerResponse.status(500).syncBody(data.message) }
     }
 }
