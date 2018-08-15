@@ -20,7 +20,9 @@ class Repository {
         )
         private val vehicles: MutableMap<Long, VehicleEntity> = mutableMapOf(
                 100L to VehicleEntity(1, 100),
-                200L to VehicleEntity(2 ,200)
+                200L to VehicleEntity(2 ,200),
+                300L to VehicleEntity(3 ,300),
+                400L to VehicleEntity(3 ,400)
         )
         private val parkingMeterEntries: MutableMap<Long, ParkingMeterEntryEntity> = mutableMapOf()
     }

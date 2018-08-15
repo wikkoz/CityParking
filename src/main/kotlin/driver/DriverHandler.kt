@@ -16,8 +16,6 @@ open class DriverHandler(private val driverService: DriverService) {
                 request.pathVariable("driverId").toLong()))
                 .map { (vehicleId, driverId) -> driverService.startParkingMeter(vehicleId, driverId) }
                 .flatMap { data ->  ok().syncBody(data) }
-                .doOnError{e -> Mono.error(e)}
-                .flatMap { data -> ServerResponse.status(500).syncBody(data) }
     }
 
     fun stop(request: ServerRequest): Mono<ServerResponse> {

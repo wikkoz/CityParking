@@ -23,7 +23,7 @@ class DriverService(private val timerService: TimerService, private val vehicleS
         val parkingMeterEntry = ParkingMeterEntry(businessId, vehicle, driver, timerService.now())
         repository.saveParkingMeterEntry(parkingMeterEntry)
 
-        return vehicle.businessID
+        return parkingMeterEntry.businessID
     }
 
     fun stopParkingMeter(businessId: Long): Money {

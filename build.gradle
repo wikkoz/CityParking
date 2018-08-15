@@ -18,6 +18,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile("org.jetbrains.kotlin:kotlin-reflect")
+    compile("org.jetbrains.kotlin:kotlin-allopen")
     compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.6'
 
     compile 'org.springframework.boot:spring-boot-starter-webflux'
@@ -27,6 +28,7 @@ dependencies {
     compile group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
     compile "org.codehaus.groovy:groovy-all:2.4.15"
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+    testCompile group: 'org.springframework', name: 'spring-test', version: '5.0.8.RELEASE'
 }
 
 compileKotlin {
